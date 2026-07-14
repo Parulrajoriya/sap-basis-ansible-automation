@@ -1,0 +1,7 @@
+---
+- name: SAP Profile Backup
+  hosts: dev
+  gather_facts: true
+
+  roles:
+    - profile_backup

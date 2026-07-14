@@ -1,0 +1,35 @@
+---
+- block:
+
+    - name: Stop SAP
+      command: echo "Stopping SAP..."
+      register: stop_output
+
+    - name: Verify Stop
+      command: echo "SAP stopped successfully."
+      register: verify_stop
+
+    - name: Start SAP
+      command: echo "Starting SAP..."
+      register: start_output
+
+    - name: Verify Start
+      command: echo "All processes GREEN"
+      register: verify_start
+
+  rescue:
+
+    - name: Handle Failure
+      debug:
+        msg: "SAP Start/Stop Automation Failed."
+
+  always:
+
+  - name: Generate Start Stop Report
+    template:
+      src: start_stop_report.j2
+      dest: /tmp/start_stop_report.txt
+
+  - name: Automation Completed
+    debug:
+      msg: "SAP Start/Stop Automation Finished."

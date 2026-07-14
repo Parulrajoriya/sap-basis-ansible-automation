@@ -1,0 +1,14 @@
+---
+- name: Get Disk Usage
+  command: "df -h"
+  register: disk_usage
+
+- name: Get SAP Process List
+  command: "sapcontrol -nr 00 -function GetProcessList"
+  register: sap_process
+  ignore_errors: true
+
+- name: Generate Health Report
+  template:
+    src: report.j2
+    dest: "/tmp/{{ ansible_hostname }}_health_report.txt"

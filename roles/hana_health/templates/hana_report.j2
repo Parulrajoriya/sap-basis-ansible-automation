@@ -1,0 +1,59 @@
+=========================================
+SAP HANA HEALTH CHECK REPORT
+=========================================
+
+Hostname:
+{{ hostname_output.stdout }}
+
+-----------------------------------------
+
+Operating System:
+{{ ansible_distribution }}
+
+-----------------------------------------
+
+Kernel:
+{{ ansible_kernel }}
+
+-----------------------------------------
+
+Memory:
+{{ memory_output.stdout }}
+
+-----------------------------------------
+
+Disk Usage:
+{{ disk_output.stdout }}
+
+-----------------------------------------
+
+HANA Services:
+
+{% if hana_service.failed %}
+
+HDB command not available.
+
+{% else %}
+
+{{ hana_service.stdout }}
+
+{% endif %}
+
+-----------------------------------------
+
+Database Status:
+
+{% if db_status.failed %}
+
+sapcontrol command not available.
+
+{% else %}
+
+{{ db_status.stdout }}
+
+{% endif %}
+
+-----------------------------------------
+
+Generated:
+{{ report_time }}

@@ -1,0 +1,22 @@
+---
+
+    - name: Get hostname
+      command: hostname
+      register: hostname_output
+
+    - name: Get disk usage
+      command: df -h
+      register: disk_output  
+
+    - name: Get memory usage
+      command: free -h
+      register: memory_output
+
+    - name: Get uptime
+      command: uptime
+      register: uptime_output
+    
+    - name: Generate System Health Report
+      template:
+        src: system_health_report.j2
+        dest: "/tmp/system_health_report.txt"

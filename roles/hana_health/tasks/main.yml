@@ -1,0 +1,30 @@
+- name: Get Hostname
+  command: hostname
+  register: hostname_output
+
+- name: Get Memory
+  command: free -h
+  register: memory_output
+
+- name: Get Disk Usage
+  command: df -h
+  register: disk_output
+
+- name: Check HANA Services
+  command: HDB info
+  register: hana_service
+  ignore_errors: true
+
+- name: Check Database Status
+  command: sapcontrol -nr 00 -function GetProcessList
+  register: db_status
+  ignore_errors: true
+
+- name: Set Report Time
+  set_fact:
+    report_time: "{{ ansible_date_time.date }} {{ ansible_date_time.time }}"
+
+- name: Generate HANA Health Report
+  template:
+    src: hana_report.j2
+    dest: /tmp/hana_health_report.txt

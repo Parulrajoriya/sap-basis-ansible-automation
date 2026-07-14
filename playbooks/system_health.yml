@@ -1,0 +1,7 @@
+---
+- name: Daily SAP System Health Check
+  hosts: dev
+  gather_facts: true
+
+  roles:
+    - system_health

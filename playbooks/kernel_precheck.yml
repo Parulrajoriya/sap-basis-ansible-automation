@@ -1,0 +1,7 @@
+---
+- name: SAP Kernel Upgrade Precheck
+  hosts: dev
+  gather_facts: true
+
+  roles:
+    - kernel_precheck

@@ -1,0 +1,7 @@
+---
+- name: SAP Start Stop Automation
+  hosts: dev
+  gather_facts: true
+
+  roles:
+    - sap_start_stop

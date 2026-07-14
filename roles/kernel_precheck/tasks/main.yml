@@ -1,0 +1,35 @@
+- name: Get hostname
+  command: hostname
+  register: hostname_output
+
+- name: Get uptime
+  command: uptime
+  register: uptime_output
+
+- name: Get memory usage
+  command: free -h
+  register: memory_output
+
+- name: Check SAP filesystems
+  command: "df -h {{ item }}"
+  loop:
+    - /usr/sap
+    - /sapmnt
+    - /usr/sap/trans
+    - /tmp
+  register: filesystem_output
+  ignore_errors: true
+
+- name: Check SAP Instance Status
+  command: "sapcontrol -nr 00 -function GetProcessList"
+  register: sap_status
+  ignore_errors: true
+
+- name: Set Report Timestamp
+  set_fact:
+    report_time: "{{ ansible_date_time.date }} {{ ansible_date_time.time }}"
+
+- name: Generate Kernel Precheck Report
+  template:
+    src: kernel_report.j2
+    dest: "/tmp/kernel_precheck_report.txt"

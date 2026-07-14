@@ -1,0 +1,16 @@
+---
+ - name: Create Directory
+   file: 
+     path: /tmp/profile_backup
+     state: directory
+     mode: '0755'
+
+ - name: Set backup timestamp
+   set_fact:
+     backup_time: "{{ ansible_date_time.iso8601_basic_short }}"
+
+ - name: Backup DEFAULT.PFL
+   copy:
+     src: /usr/sap/PRD/SYS/profile/DEFAULT.PFL
+     dest: "/tmp/profile_backup/DEFAULT.PFL_{{ backup_time }}"
+     remote_src: true

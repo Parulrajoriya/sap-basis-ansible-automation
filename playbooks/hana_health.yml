@@ -1,0 +1,7 @@
+---
+- name: SAP HANA Health Check
+  hosts: dev
+  gather_facts: true
+
+  roles:
+    - hana_health

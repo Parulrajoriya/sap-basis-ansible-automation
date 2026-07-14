@@ -1,0 +1,58 @@
+==========================================
+SAP KERNEL PRE-CHECK REPORT
+==========================================
+
+Hostname:
+{{ hostname_output.stdout }}
+
+------------------------------------------
+
+Uptime:
+{{ uptime_output.stdout }}
+
+------------------------------------------
+
+Memory:
+{{ memory_output.stdout }}
+
+------------------------------------------
+
+Filesystem Checks
+
+{% for result in filesystem_output.results %}
+
+Command:
+{{ result.item }}
+
+{% if result.failed %}
+
+Directory not found.
+
+{% else %}
+
+{{ result.stdout }}
+
+{% endif %}
+
+------------------------------------------
+
+{% endfor %}
+
+SAP Status
+
+{% if sap_status.failed %}
+
+sapcontrol command not available.
+
+{% else %}
+
+{{ sap_status.stdout }}
+
+{% endif %}
+
+------------------------------------------
+
+Generated:
+{{ report_time }}
+
+==========================================
