@@ -161,5 +161,3 @@ ansible-playbook playbooks/kernel_precheck.yml
 ## Author
 **Parul Rajoriya**
 SAP BASIS Administrator
-
-Tata Consultancy Services (TCS)
